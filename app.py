@@ -4,9 +4,8 @@ import pandas as pd
 from keras.models import load_model
 from io import BytesIO
 
-# ----------------------
 # Load LSTM model
-# ----------------------
+
 model = load_model("lstm_model.keras")
 input_shape = model.input_shape  # (batch_size, timesteps, features)
 n_features = input_shape[2]
@@ -14,9 +13,9 @@ n_features = input_shape[2]
 # Feature names
 feature_names = ['IRRADIATION', 'MODULE_TEMPERATURE', 'AMBIENT_TEMPERATURE']
 
-# ----------------------
+
 # Streamlit Layout
-# ----------------------
+
 st.set_page_config(page_title="Solar Drilling Prediction", layout="wide")
 st.title("🚀 Solar AC Power & Drilling Predictor")
 
@@ -30,9 +29,9 @@ st.markdown(
 # Tabs
 tab1, tab2, tab3 = st.tabs(["Single Input", "Batch CSV", "Visualizations"])
 
-# ----------------------
+
 # TAB 1: Single Input
-# ----------------------
+
 with tab1:
     st.subheader("Single Sample Prediction")
     input_data = []
@@ -72,9 +71,9 @@ with tab1:
         st.subheader("Single Prediction Chart")
         st.bar_chart(pd.DataFrame({'AC_POWER': [predicted_power]}))
 
-# ----------------------
+
 # TAB 2: Batch CSV
-# ----------------------
+
 with tab2:
     st.subheader("Upload CSV for Batch Prediction")
     uploaded_file = st.file_uploader("Upload CSV", type="csv")
@@ -92,7 +91,7 @@ with tab2:
             batch_pred = model.predict(batch_data)
             df['AC_POWER'] = batch_pred
 
-            # Simulate thresholds (replace with real dataset quantiles)
+            # Simulate thresholds
             high = 75
             medium = 40
 
@@ -119,9 +118,9 @@ with tab2:
                 mime="text/csv"
             )
 
-# ----------------------
+
 # TAB 3: Visualizations
-# ----------------------
+
 with tab3:
     st.subheader("Prediction Visualizations")
 
